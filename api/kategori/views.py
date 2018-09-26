@@ -6,3 +6,8 @@ from api.kategori.serializers import KategoriSerializer
 class KategoriList(generics.ListAPIView):
     queryset = Kategori.objects.all()
     serializer_class = KategoriSerializer
+
+
+class KategoriDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Kategori.objects.all()
+    serializer_class = KategoriSerializer

@@ -1,6 +1,7 @@
-from django.conf.urls import url
-from api.kategori.views import KategoriList
+from django.urls import include, path
+from api.kategori.views import KategoriList, KategoriDetail
 
 urlpatterns = [
-    url(r'^', KategoriList.as_view(), name='kategori-list')
+    path('', KategoriList.as_view(), name='kategori-list'),
+    path('<pk>', KategoriDetail.as_view(), name='kategori-detail'),
 ]
