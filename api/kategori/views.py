@@ -13,3 +13,4 @@ class KategoriList(generics.ListCreateAPIView):
 class KategoriDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Kategori.objects.all()
     serializer_class = KategoriSerializer
+    permission_classes = (IsAdminOrReadOnly,)

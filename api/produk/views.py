@@ -13,3 +13,4 @@ class ProdukList(generics.ListCreateAPIView):
 class ProdukDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Produk.objects.all()
     serializer_class = ProdukSerializer
+    permission_classes = (IsAdminOrReadOnly,)
