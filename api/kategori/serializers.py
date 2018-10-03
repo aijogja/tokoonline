@@ -5,4 +5,4 @@ from product.models import Kategori
 class KategoriSerializer(serializers.ModelSerializer):
     class Meta:
         model = Kategori
-        fields = ('nama', )
+        fields = ('id', 'nama')
