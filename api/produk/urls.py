@@ -1,6 +1,7 @@
-from django.conf.urls import url
-from api.produk.views import ProdukList
+from django.urls import include, path
+from api.produk.views import ProdukList, ProdukDetail
 
 urlpatterns = [
-    url(r'^', ProdukList.as_view(), name='produk-list')
+    path('', ProdukList.as_view(), name='produk-list'),
+    path('<pk>', ProdukDetail.as_view(), name='produk-detail'),
 ]
