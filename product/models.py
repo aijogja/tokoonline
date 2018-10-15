@@ -27,10 +27,9 @@ class Order(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True)
+    no_hape = models.CharField(max_length=15, null=True)
     alamat = models.TextField()
     ongkir = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    qty = models.IntegerField(default=1)
-    produk = models.ForeignKey('Produk', on_delete=models.CASCADE)
     catatan = models.TextField(null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
@@ -42,6 +41,19 @@ class Order(models.Model):
         default='checkout',
         max_length=10,
     )
+    totalbelanja = models.DecimalField(
+        max_digits=15, decimal_places=2, default=0)
 
     def __str__(self):
         return str(self.pk)
+
+
+class OrderBarang(models.Model):
+    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    produk = models.ForeignKey('Produk', on_delete=models.CASCADE)
+    harga = models.DecimalField(
+        max_digits=15, decimal_places=2, default=0)
+    qty = models.IntegerField(default=1)
+    totalhargabarang = models.DecimalField(
+        max_digits=15, decimal_places=2, default=0)
+
