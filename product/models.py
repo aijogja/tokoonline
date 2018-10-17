@@ -56,4 +56,3 @@ class OrderBarang(models.Model):
     qty = models.IntegerField(default=1)
     totalhargabarang = models.DecimalField(
         max_digits=15, decimal_places=2, default=0)
-

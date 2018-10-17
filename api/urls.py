@@ -9,6 +9,7 @@ urlpatterns = [
     path('docs', schema_view),
     path('kategori/', include('api.kategori.urls')),
     path('produk/', include('api.produk.urls')),
+    path('order/', include('api.order.urls')),
     path('auth-token/', views.obtain_auth_token)
 ]
 
