@@ -15,5 +15,5 @@ class OrderSerializer(serializers.ModelSerializer):
 
 class OrderBarangSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Order
-        fields = ('id', 'order', 'produk', 'qty')
+        model = OrderBarang
+        fields = ('id', 'order', 'produk', 'harga', 'qty')

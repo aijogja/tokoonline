@@ -6,7 +6,7 @@ schema_view = get_swagger_view(title='TokoOnline API')
 
 
 urlpatterns = [
-    path('docs', schema_view),
+    path('docs/', schema_view),
     path('kategori/', include('api.kategori.urls')),
     path('produk/', include('api.produk.urls')),
     path('order/', include('api.order.urls')),

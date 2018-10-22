@@ -8,8 +8,24 @@ class OrderList(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
+    def get_queryset(self):
+        user = self.request.user
+        orders = Order.objects.filter(user=user)
+        return orders
+
 
 class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     permission_classes = (permissions.IsAuthenticated,)
+
+
+class OrderBarangList(generics.ListCreateAPIView):
+    queryset = OrderBarang.objects.all()
+    serializer_class = OrderBarangSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        orders = OrderBarang.objects.filter(order=pk)
+        return orders
