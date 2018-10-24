@@ -16,4 +16,10 @@ class OrderSerializer(serializers.ModelSerializer):
 class OrderBarangSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderBarang
-        fields = ('id', 'order', 'produk', 'harga', 'qty')
+        fields = ('id', 'produk', 'harga', 'qty')
+
+    def create(self, validated_data):
+        order_id = self.context['order_id']
+        order = Order.objects.get(id=order_id)
+        validated_data['order'] = order
+        return super(OrderBarangSerializer, self).create(validated_data)

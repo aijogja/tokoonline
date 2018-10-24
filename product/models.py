@@ -27,18 +27,19 @@ class Order(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True)
-    no_hape = models.CharField(max_length=15, null=True)
-    alamat = models.TextField()
+    no_hape = models.CharField(max_length=15, blank=True, null=True)
+    alamat = models.TextField(blank=True, null=True)
     ongkir = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     catatan = models.TextField(null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
         choices=(
+            ('cart', 'In Cart'),
             ('checkout', 'Checkout'),
             ('paid', 'Terbayar'),
             ('delivered', 'Terkirim'),
         ),
-        default='checkout',
+        default='cart',
         max_length=10,
     )
     totalbelanja = models.DecimalField(

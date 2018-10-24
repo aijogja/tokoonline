@@ -29,3 +29,10 @@ class OrderBarangList(generics.ListCreateAPIView):
         pk = self.kwargs.get('pk')
         orders = OrderBarang.objects.filter(order=pk)
         return orders
+
+    def get_serializer_context(self):
+        pk = self.kwargs.get('pk')
+        context = super(OrderBarangList, self).get_serializer_context()
+        context['order_id'] = pk
+        return context
+
