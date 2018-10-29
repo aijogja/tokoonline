@@ -34,6 +34,7 @@ class OrderBarangList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_serializer_class(self):
+        # Untuk memisahkan serializer yang digunakan pada GET dan POST
         if self.request.method in permissions.SAFE_METHODS:
             return OrderBarangGETSerializer
         return OrderBarangPOSTSerializer

@@ -50,10 +50,20 @@ class Order(models.Model):
 
 
 class OrderBarang(models.Model):
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
-    produk = models.ForeignKey('Produk', on_delete=models.CASCADE)
+    order = models.ForeignKey(
+        'Order', on_delete=models.CASCADE, related_name='orderbarangnya')
+    produk = models.ForeignKey(
+        'Produk', on_delete=models.CASCADE, related_name='orderbarangnya')
     harga = models.DecimalField(
         max_digits=15, decimal_places=2, default=0)
     qty = models.IntegerField(default=1)
-    totalhargabarang = models.DecimalField(
-        max_digits=15, decimal_places=2, default=0)
+
+    class Meta:
+        unique_together = (("order", "produk"),)
+
+    def __str__(self):
+        return str(self.produk.nama)
+
+    # digunakan untuk kalkulasi subtotal tiap order barang
+    def subtotal(self):
+        return self.harga * self.qty
