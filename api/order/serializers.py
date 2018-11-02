@@ -3,16 +3,29 @@ from product.models import Order, OrderBarang
 from api.produk.serializers import ProdukSerializer
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class OrderGETSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('id', 'no_hape', 'alamat', 'ongkir', 'catatan')
+
+
+class OrderPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ('id', )
 
     def create(self, validated_data):
         # Digunakan untuk biar ketika order, otomatis mengisi user berdasarkan
         # siapa yang sedang aktif
         user = self.context['request'].user
         validated_data['user'] = user
+
+        # Code ini digunakan untuk mengecek. Kalau sudah ada orderan dengan
+        # status cart, maka tidak perlu create order, tp ambil data order tsb
+        # Logikanya : cart itu cuma ada 1.
+        order = user.orderanku.filter(status='cart').first()
+        if order:
+            return order
         return super(OrderSerializer, self).create(validated_data)
 
 

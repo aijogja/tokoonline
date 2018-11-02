@@ -26,7 +26,7 @@ class Order(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
-        null=True)
+        null=True, related_name='orderanku')
     no_hape = models.CharField(max_length=15, blank=True, null=True)
     alamat = models.TextField(blank=True, null=True)
     ongkir = models.DecimalField(max_digits=15, decimal_places=2, default=0)
