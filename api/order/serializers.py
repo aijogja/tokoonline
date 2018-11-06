@@ -26,7 +26,7 @@ class OrderPOSTSerializer(serializers.ModelSerializer):
         order = user.orderanku.filter(status='cart').first()
         if order:
             return order
-        return super(OrderSerializer, self).create(validated_data)
+        return super(OrderPOSTSerializer, self).create(validated_data)
 
 
 class OrderBarangGETSerializer(serializers.ModelSerializer):
