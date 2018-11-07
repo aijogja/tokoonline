@@ -11,14 +11,21 @@ class KategoriAdmin(admin.ModelAdmin):
         ProdukInline,
     ]
 
+class ProdukAdmin(admin.ModelAdmin):
+    list_display = ('nama', 'merk', 'kategori', 'qty', 'harga')
+    list_filter = ('kategori',)
+
+
 class OrderBarangInline(admin.TabularInline):
     model = OrderBarang
 
 class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'status', 'date', 'totalbelanja')
+    list_filter = ('user', 'status')
     inlines = [
         OrderBarangInline,
     ]
 
 admin.site.register(Kategori, KategoriAdmin)
-admin.site.register(Produk)
+admin.site.register(Produk, ProdukAdmin)
 admin.site.register(Order, OrderAdmin)

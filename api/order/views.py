@@ -66,6 +66,12 @@ class OrderBarangDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     lookup_url_kwarg = 'barangid'
 
+    def get_serializer_class(self):
+        # Untuk memisahkan serializer yang digunakan pada GET dan POST
+        if self.request.method in permissions.SAFE_METHODS:
+            return OrderBarangGETSerializer
+        return OrderBarangPOSTSerializer
+
     def get_queryset(self):
         # Untuk menampilkan data OrderBarang berdasarkan id Order
         pk = self.kwargs.get('pk')

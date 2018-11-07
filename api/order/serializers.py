@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from product.models import Order, OrderBarang
+from product.models import Order, OrderBarang, Produk
 from api.produk.serializers import ProdukSerializer
 
 
@@ -39,10 +39,23 @@ class OrderBarangGETSerializer(serializers.ModelSerializer):
 
 
 class OrderBarangPOSTSerializer(serializers.ModelSerializer):
+    qty = serializers.IntegerField(max_value=99, min_value=1)
 
     class Meta:
         model = OrderBarang
         fields = ('id', 'produk', 'qty')
+
+    def validate_qty(self, value):
+        """
+        Check stok dari produk
+        """
+        id_produk = self.initial_data['produk']
+        produk = Produk.objects.get(pk=id_produk)
+        if value > produk.qty:
+            raise serializers.ValidationError(
+                "Stok cuma ada {}".format(produk.qty)
+            )
+        return value
 
     def create(self, validated_data):
         # Digunakan untuk biar ketika order barang, otomatis menggunakan
