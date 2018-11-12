@@ -2,8 +2,8 @@ from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from product.models import Order, OrderBarang
 from api.order.serializers import (
-    OrderGETSerializer,
-    OrderPOSTSerializer,
+    OrderSerializer1,
+    OrderSerializer2,
     OrderBarangGETSerializer,
     OrderBarangPOSTSerializer,
 )
@@ -11,7 +11,7 @@ from api.order.serializers import (
 
 class OrderList(generics.ListCreateAPIView):
     queryset = Order.objects.all()
-    serializer_class = OrderGETSerializer
+    serializer_class = OrderSerializer1
     permission_classes = (permissions.IsAuthenticated,)
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('status',)
@@ -19,8 +19,8 @@ class OrderList(generics.ListCreateAPIView):
     def get_serializer_class(self):
         # Untuk memisahkan serializer yang digunakan pada GET dan POST
         if self.request.method in permissions.SAFE_METHODS:
-            return OrderGETSerializer
-        return OrderPOSTSerializer
+            return OrderSerializer1
+        return OrderSerializer2
 
     def get_queryset(self):
         # Untuk menampilkan data Order berdasarkan user yang login
@@ -31,7 +31,7 @@ class OrderList(generics.ListCreateAPIView):
 
 class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
-    serializer_class = OrderGETSerializer
+    serializer_class = OrderSerializer1
     permission_classes = (permissions.IsAuthenticated,)
 
 

@@ -3,13 +3,13 @@ from product.models import Order, OrderBarang, Produk
 from api.produk.serializers import ProdukSerializer
 
 
-class OrderGETSerializer(serializers.ModelSerializer):
+class OrderSerializer1(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('id', 'no_hape', 'alamat', 'ongkir', 'catatan')
 
 
-class OrderPOSTSerializer(serializers.ModelSerializer):
+class OrderSerializer2(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('id', )
@@ -26,7 +26,7 @@ class OrderPOSTSerializer(serializers.ModelSerializer):
         order = user.orderanku.filter(status='cart').first()
         if order:
             return order
-        return super(OrderPOSTSerializer, self).create(validated_data)
+        return super(OrderSerializer2, self).create(validated_data)
 
 
 class OrderBarangGETSerializer(serializers.ModelSerializer):
