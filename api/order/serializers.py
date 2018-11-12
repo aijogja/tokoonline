@@ -6,7 +6,19 @@ from api.produk.serializers import ProdukSerializer
 class OrderSerializer1(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ('id', 'no_hape', 'alamat', 'ongkir', 'catatan')
+        fields = ('id', 'no_hape', 'alamat', 'ongkir', 'catatan', 'status')
+
+    def update(self, instance, validated_data):
+        if instance.status == 'cart' and validated_data['status'] == 'checkout':
+            # Digunakan untuk mengurangi qty produk, ketika status dari cart
+            # menjadi checkout
+            orderbarang = instance.orderbarangnya.all()
+            for ob in orderbarang:
+                produk = ob.produk
+                sisaqty = produk.qty - ob.qty
+                produk.qty = sisaqty
+                produk.save()
+        return super(OrderSerializer1, self).update(instance, validated_data)
 
 
 class OrderSerializer2(serializers.ModelSerializer):
