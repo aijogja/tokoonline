@@ -74,6 +74,13 @@ class OrderBarangPOSTSerializer(serializers.ModelSerializer):
         # order id yang sedang dipakai
         order_id = self.context['order_id']
         order = Order.objects.get(id=order_id)
+        if order.status != 'cart':
+            # ini digunakan untuk memvalidasi apakah status order cart atau
+            # bukan. kalau bukan cart, maka sudah tidak bisa nambah barang
+            raise serializers.ValidationError(
+                "Anda sudah tidak bisa untuk menambah barang"
+            )
+
         orderbarangnya = order.orderbarangnya.all()
 
         produk = validated_data['produk']

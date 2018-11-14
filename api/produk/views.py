@@ -10,7 +10,11 @@ class ProdukList(generics.ListCreateAPIView):
     serializer_class = ProdukSerializer
     permission_classes = (IsAdminOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('kategori',)
+    filter_fields = {
+        'kategori': ['exact'],
+        'merk': ['iexact'],
+        'harga': ['gte', 'lte']
+    }
 
 
 class ProdukDetail(generics.RetrieveUpdateDestroyAPIView):
