@@ -43,10 +43,17 @@ class Order(models.Model):
         max_length=10,
     )
     totalbelanja = models.DecimalField(
-        max_digits=15, decimal_places=2, default=0)
+        max_digits=15, decimal_places=2, default=0, editable=False)
 
     def __str__(self):
         return str(self.pk)
+
+    def save(self, *args, **kwargs):
+        self.totalbelanja = 0
+        for ob in self.orderbarangnya.all():
+            self.totalbelanja = self.totalbelanja + ob.subtotal()
+        self.totalbelanja = self.totalbelanja + self.ongkir
+        super(Order, self).save(*args, **kwargs)
 
 
 class OrderBarang(models.Model):

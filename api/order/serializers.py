@@ -6,7 +6,8 @@ from api.produk.serializers import ProdukSerializer
 class OrderSerializer1(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ('id', 'no_hape', 'alamat', 'ongkir', 'catatan', 'status')
+        fields = ('id', 'no_hape', 'alamat', 'ongkir', 'catatan', 'status',
+            'totalbelanja', 'date')
 
     def update(self, instance, validated_data):
         if instance.status == 'cart' and validated_data['status'] == 'checkout':
